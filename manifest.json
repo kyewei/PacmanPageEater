@@ -1,0 +1,21 @@
+{
+  "manifest_version": 2,
+
+  "name": "PagePacman",
+  "description": "GAME",
+  "version": "1.0",
+  "content_scripts" : [
+	{
+		"matches": ["http://*/*", "https://*/*"],
+		"js": ["contentscript.js"]
+	}
+  ],
+  "browser_action": {
+    "default_icon": "pacman.png",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "tabs",
+    "https://ajax.googleapis.com/"
+  ]
+}
