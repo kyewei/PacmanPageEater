@@ -14,6 +14,7 @@
     "default_icon": "pacman.png",
     "default_popup": "popup.html"
   },
+  "web_accessible_resources": ["pacman.png"],
   "permissions": [
     "tabs",
     "https://ajax.googleapis.com/"

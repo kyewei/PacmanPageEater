@@ -1,9 +1,6 @@
 //(function() {
 
-var hmm;
-
-
-var catify = function () {
+var catify = function () { //Absolutely nothing happened here. Nothing.
     var images = document.getElementsByTagName('img');
     var srcList = [];
     for(var i = 0; i < images.length; i++) {
@@ -13,6 +10,8 @@ var catify = function () {
 
 var drawcontext;
 var drawcanvas;
+
+// Source: http://permadi.com/blog/2009/04/usng-html-5-canvas-to-draw-over-my-web-page-part-2/
 function createCanvasOverlay()
 {
     // Create a blank div where we are going to put the canvas into.
@@ -51,7 +50,7 @@ function createCanvasOverlay()
 
 };
 
-/*var arrayofgreen = [];
+/*var arrayofgreen = []; //Supposed to be a worm game, but I decided DOM eating was more fun. This is the leftovers.
 
 function makeGreen (x,y) {
     var green = {};
@@ -83,32 +82,24 @@ var keys = {"w":false, "a":false, "s":false, "d": false};
 function handleKeyDown(e) {
     if (e.keyCode ==65) {
         keys.a=true;
-        //console.log(e.keyCode);
     } else if (e.keyCode ==87) {
         keys.w=true;
-        //console.log(e.keyCode);
     } else if (e.keyCode ==68) {
         keys.d=true;
-        //console.log(e.keyCode);
     } else if (e.keyCode ==83) {
         keys.s=true;
-        //console.log(e.keyCode);
     }
 };
 
 function handleKeyUp(e) {
     if (e.keyCode ==65) {
         keys.a=false;
-        //console.log(e.keyCode);
     } else if (e.keyCode ==87) {
         keys.w=false;
-        //console.log(e.keyCode);
     } else if (e.keyCode ==68) {
         keys.d=false;
-        //console.log(e.keyCode);
     } else if (e.keyCode ==83) {
         keys.s=false;
-        //console.log(e.keyCode);
     }
 };
 
@@ -124,16 +115,14 @@ function startGame() {
             domlist.push([dom, dom.getBoundingClientRect()]);
             //var domsize = dom.getBoundingClientRect();
             //arrayofgreen = arrayofgreen.concat(makeGreenArea(domsize.left, domsize.top, domsize.right, domsize.bottom));
-
         }
     }
     image = new Image();
-    image.src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Pacman.svg/400px-Pacman.svg.png";
+    image.src = chrome.extension.getURL("pacman.png");
     image.loaded=false;
     image.onload= function() {
         image.loaded=true;
     }
-
 
     var pagerect = document.body.getBoundingClientRect();
     worm.x = (pagerect.left+pagerect.right)/2;
@@ -157,11 +146,11 @@ function drawWorm() {
         var TO_RADIANS = Math.PI/180;
 
         drawcontext.save();
-        drawcontext.translate(worm.x-16,worm.y-16);
+        drawcontext.translate(worm.x,worm.y);
         drawcontext.rotate(image.angle * TO_RADIANS);
         drawcontext.drawImage(image,/*worm.x*/-16,/*worm.y*/-16,32,32);
-        drawcontext.fillStyle="#964B00";
-        drawcontext.fillRect(-1, -1,2,2);
+        //drawcontext.fillStyle="#964B00";
+        //drawcontext.fillRect(-1, -1,2,2);
         drawcontext.restore();
     }
 };
@@ -223,25 +212,20 @@ function loop () {
     //drawcontext.fillRect(0,0, drawcanvas.width, drawcanvas.height);
     if (keys.w === true){
         worm.y=worm.y-16;
-        //console.log("w");
         image.angle=270;
     }
-
     if (keys.s === true){
         worm.y=worm.y+16;
-        //console.log("s");
         image.angle=90;
     }
 
     if (keys.a === true){
         worm.x=worm.x-16;
-        //console.log("a");
         image.angle=180;
     }
 
     if (keys.d === true) {
         worm.x=worm.x+16;
-        //console.log("d");
         image.angle=0;
     }
 
@@ -260,7 +244,6 @@ function loop () {
                 arrayofgreen[i].alive=false;
         }
     }*/
-    //var needredraw=false;
     drawcontext.beginPath();
     for (var i=0; i< domlist.length; ++i) {
         var dom = domlist[i][0];
@@ -273,7 +256,7 @@ function loop () {
                 //console.log("Should eat",dom);
                 dom.style.visibility="hidden";
             } else {
-                drawDom(domloc.left, domloc.top, domloc.right, domloc.bottom);
+                //drawDom(domloc.left, domloc.top, domloc.right, domloc.bottom);
             }
         }
     }
@@ -282,7 +265,6 @@ function loop () {
 
     drawWorm(worm);
 
-
     setTimeout(loop, 50);
 };
 //createCanvasOverlay();
@@ -290,11 +272,11 @@ function loop () {
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        console.log(request);
+        //console.log(request);
         // request is object being sent
         //this[request.action]();
         createCanvasOverlay();
         startGame();
-
+        sendResponse({"loaded": "yes"});
     });
 //})();
